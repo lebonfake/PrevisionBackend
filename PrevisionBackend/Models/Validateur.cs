@@ -5,6 +5,6 @@ namespace PrevisionBackend.Models
         public int Id { get; set; }
         public User User { get; set; }
 
-        public ICollection<ValidateursEtape> ValidateursEtapes { get; set; }
+        public ICollection<EtapeFluxValidateurPermission> EtapeFluxValidateurPermissions { get; set; }
     }
 }

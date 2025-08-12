@@ -33,8 +33,7 @@ namespace PrevisionBackend.Data
         public DbSet<EtapePrev> EtapePrev { get; set; }
 
         public DbSet<Validateur> Validateurs { get; set; }
-        public DbSet<ValidateursEtape> ValidateurEtapes { get; set; }
-        public DbSet<ValidateurPermissionEtape> ValidateurPermissionEtapes { get; set; }
+        public DbSet<EtapeFluxValidateurPermission> EtapeFluxValidateurPermissions { get; set; }
         public DbSet<PermissionPrev> PermissionPrevisions { get; set; }
 
         // Authentication and authorization models
@@ -118,6 +117,15 @@ namespace PrevisionBackend.Data
                 .WithMany() // si pas de collection dans Ferme
                 .HasForeignKey(a => a.FermeCod)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<EtapeFluxValidateurPermission>()
+    .HasKey(efvp => new { efvp.EtapeFluxId, efvp.ValidateurId, efvp.PermissionPrevId });
+
+            modelBuilder.Entity<LignePrevision>()
+           .Property(lp => lp.Valeur)
+           .HasPrecision(18, 2); // Par exemple: 18 chiffres au total, 2 après la virgule.
+                                 // Ajustez ces valeurs (18, 2) selon vos besoins métier réels.
 
             // Si 'Module_Permissions' dans 'Permission' ne se mappe pas correctement par convention
             // et que vous avez des problèmes, vous pourriez avoir besoin de le spécifier explicitement.

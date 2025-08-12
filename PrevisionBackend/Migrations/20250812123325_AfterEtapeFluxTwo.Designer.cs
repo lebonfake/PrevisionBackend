@@ -12,8 +12,8 @@ using PrevisionBackend.Data;
 namespace PrevisionBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250811232618_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250812123325_AfterEtapeFluxTwo")]
+    partial class AfterEtapeFluxTwo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,9 +144,6 @@ namespace PrevisionBackend.Migrations
                     b.Property<int>("FluxId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdFlux")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -159,6 +156,32 @@ namespace PrevisionBackend.Migrations
                     b.HasIndex("FluxId");
 
                     b.ToTable("EtapeFlux");
+                });
+
+            modelBuilder.Entity("PrevisionBackend.Models.EtapeFluxValidateurPermission", b =>
+                {
+                    b.Property<int>("EtapeFluxId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("ValidateurId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
+                    b.Property<int>("PermissionPrevId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("DateAssigned")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("EtapeFluxId", "ValidateurId", "PermissionPrevId");
+
+                    b.HasIndex("PermissionPrevId");
+
+                    b.HasIndex("ValidateurId");
+
+                    b.ToTable("EtapeFluxValidateurPermissions");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.EtapePrev", b =>
@@ -275,6 +298,7 @@ namespace PrevisionBackend.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valeur")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -626,50 +650,6 @@ namespace PrevisionBackend.Migrations
                     b.ToTable("Validateurs");
                 });
 
-            modelBuilder.Entity("PrevisionBackend.Models.ValidateurPermissionEtape", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PermissionPrev")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ValidateurEtapeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ValidateurEtapeId");
-
-                    b.ToTable("ValidateurPermissionEtapes");
-                });
-
-            modelBuilder.Entity("PrevisionBackend.Models.ValidateursEtape", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EtapeFluxId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ValidateurId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EtapeFluxId");
-
-                    b.HasIndex("ValidateurId");
-
-                    b.ToTable("ValidateurEtapes");
-                });
-
             modelBuilder.Entity("PrevisionBackend.Models.Variete", b =>
                 {
                     b.Property<int>("CodeVar")
@@ -770,6 +750,33 @@ namespace PrevisionBackend.Migrations
                         .IsRequired();
 
                     b.Navigation("Flux");
+                });
+
+            modelBuilder.Entity("PrevisionBackend.Models.EtapeFluxValidateurPermission", b =>
+                {
+                    b.HasOne("PrevisionBackend.Models.EtapeFlux", "EtapeFlux")
+                        .WithMany("EtapeFluxValidateurPermissions")
+                        .HasForeignKey("EtapeFluxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PrevisionBackend.Models.PermissionPrev", "PermissionPrev")
+                        .WithMany("EtapeFluxValidateurPermissions")
+                        .HasForeignKey("PermissionPrevId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PrevisionBackend.Models.Validateur", "Validateur")
+                        .WithMany("EtapeFluxValidateurPermissions")
+                        .HasForeignKey("ValidateurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EtapeFlux");
+
+                    b.Navigation("PermissionPrev");
+
+                    b.Navigation("Validateur");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.EtapePrev", b =>
@@ -930,36 +937,6 @@ namespace PrevisionBackend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PrevisionBackend.Models.ValidateurPermissionEtape", b =>
-                {
-                    b.HasOne("PrevisionBackend.Models.ValidateursEtape", "ValidateurEtape")
-                        .WithMany("PermissionsEtape")
-                        .HasForeignKey("ValidateurEtapeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ValidateurEtape");
-                });
-
-            modelBuilder.Entity("PrevisionBackend.Models.ValidateursEtape", b =>
-                {
-                    b.HasOne("PrevisionBackend.Models.EtapeFlux", "EtapeFlux")
-                        .WithMany("ValidateursEtapes")
-                        .HasForeignKey("EtapeFluxId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PrevisionBackend.Models.Validateur", "Validateur")
-                        .WithMany("ValidateursEtapes")
-                        .HasForeignKey("ValidateurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EtapeFlux");
-
-                    b.Navigation("Validateur");
-                });
-
             modelBuilder.Entity("PrevisionBackend.Models.Variete", b =>
                 {
                     b.HasOne("PrevisionBackend.Models.Produit", "Produit")
@@ -989,9 +966,9 @@ namespace PrevisionBackend.Migrations
 
             modelBuilder.Entity("PrevisionBackend.Models.EtapeFlux", b =>
                 {
-                    b.Navigation("EtapesPrev");
+                    b.Navigation("EtapeFluxValidateurPermissions");
 
-                    b.Navigation("ValidateursEtapes");
+                    b.Navigation("EtapesPrev");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.Ferme", b =>
@@ -1018,6 +995,11 @@ namespace PrevisionBackend.Migrations
             modelBuilder.Entity("PrevisionBackend.Models.Permission", b =>
                 {
                     b.Navigation("ProfilePermissions");
+                });
+
+            modelBuilder.Entity("PrevisionBackend.Models.PermissionPrev", b =>
+                {
+                    b.Navigation("EtapeFluxValidateurPermissions");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.Prevision", b =>
@@ -1061,12 +1043,7 @@ namespace PrevisionBackend.Migrations
 
             modelBuilder.Entity("PrevisionBackend.Models.Validateur", b =>
                 {
-                    b.Navigation("ValidateursEtapes");
-                });
-
-            modelBuilder.Entity("PrevisionBackend.Models.ValidateursEtape", b =>
-                {
-                    b.Navigation("PermissionsEtape");
+                    b.Navigation("EtapeFluxValidateurPermissions");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.Variete", b =>

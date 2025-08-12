@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PrevisionBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AfterEtapeFlux : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -359,25 +359,31 @@ namespace PrevisionBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ValidateurEtapes",
+                name: "EtapeFluxValidateurPermissions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     EtapeFluxId = table.Column<int>(type: "int", nullable: false),
-                    ValidateurId = table.Column<int>(type: "int", nullable: false)
+                    ValidateurId = table.Column<int>(type: "int", nullable: false),
+                    PermissionPrevId = table.Column<int>(type: "int", nullable: false),
+                    DateAssigned = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ValidateurEtapes", x => x.Id);
+                    table.PrimaryKey("PK_EtapeFluxValidateurPermissions", x => new { x.EtapeFluxId, x.ValidateurId, x.PermissionPrevId });
                     table.ForeignKey(
-                        name: "FK_ValidateurEtapes_EtapeFlux_EtapeFluxId",
+                        name: "FK_EtapeFluxValidateurPermissions_EtapeFlux_EtapeFluxId",
                         column: x => x.EtapeFluxId,
                         principalTable: "EtapeFlux",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ValidateurEtapes_Validateurs_ValidateurId",
+                        name: "FK_EtapeFluxValidateurPermissions_PermissionPrevisions_PermissionPrevId",
+                        column: x => x.PermissionPrevId,
+                        principalTable: "PermissionPrevisions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EtapeFluxValidateurPermissions_Validateurs_ValidateurId",
                         column: x => x.ValidateurId,
                         principalTable: "Validateurs",
                         principalColumn: "Id",
@@ -502,33 +508,13 @@ namespace PrevisionBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ValidateurPermissionEtapes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PermissionPrev = table.Column<int>(type: "int", nullable: false),
-                    ValidateurEtapeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ValidateurPermissionEtapes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ValidateurPermissionEtapes_ValidateurEtapes_ValidateurEtapeId",
-                        column: x => x.ValidateurEtapeId,
-                        principalTable: "ValidateurEtapes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "LignePrevisions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdPrevisionDetails = table.Column<int>(type: "int", nullable: false),
-                    Valeur = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Valeur = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PrevisionDetailsId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -573,6 +559,16 @@ namespace PrevisionBackend.Migrations
                 name: "IX_EtapeFlux_FluxId",
                 table: "EtapeFlux",
                 column: "FluxId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EtapeFluxValidateurPermissions_PermissionPrevId",
+                table: "EtapeFluxValidateurPermissions",
+                column: "PermissionPrevId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EtapeFluxValidateurPermissions_ValidateurId",
+                table: "EtapeFluxValidateurPermissions",
+                column: "ValidateurId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EtapePrev_EtapeFluxId",
@@ -650,21 +646,6 @@ namespace PrevisionBackend.Migrations
                 column: "ProfileID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ValidateurEtapes_EtapeFluxId",
-                table: "ValidateurEtapes",
-                column: "EtapeFluxId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ValidateurEtapes_ValidateurId",
-                table: "ValidateurEtapes",
-                column: "ValidateurId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ValidateurPermissionEtapes_ValidateurEtapeId",
-                table: "ValidateurPermissionEtapes",
-                column: "ValidateurEtapeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Validateurs_UserID",
                 table: "Validateurs",
                 column: "UserID");
@@ -687,19 +668,16 @@ namespace PrevisionBackend.Migrations
                 name: "Assolements");
 
             migrationBuilder.DropTable(
+                name: "EtapeFluxValidateurPermissions");
+
+            migrationBuilder.DropTable(
                 name: "EtapePrev");
 
             migrationBuilder.DropTable(
                 name: "LignePrevisions");
 
             migrationBuilder.DropTable(
-                name: "PermissionPrevisions");
-
-            migrationBuilder.DropTable(
                 name: "ProfilePermissions");
-
-            migrationBuilder.DropTable(
-                name: "ValidateurPermissionEtapes");
 
             migrationBuilder.DropTable(
                 name: "Cycles");
@@ -708,16 +686,25 @@ namespace PrevisionBackend.Migrations
                 name: "VarieteChamps");
 
             migrationBuilder.DropTable(
+                name: "PermissionPrevisions");
+
+            migrationBuilder.DropTable(
+                name: "Validateurs");
+
+            migrationBuilder.DropTable(
+                name: "EtapeFlux");
+
+            migrationBuilder.DropTable(
                 name: "PrevisionDetails");
 
             migrationBuilder.DropTable(
                 name: "Permissions");
 
             migrationBuilder.DropTable(
-                name: "ValidateurEtapes");
+                name: "Varietes");
 
             migrationBuilder.DropTable(
-                name: "Varietes");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "PrevisionFermes");
@@ -729,19 +716,13 @@ namespace PrevisionBackend.Migrations
                 name: "Modules");
 
             migrationBuilder.DropTable(
-                name: "EtapeFlux");
-
-            migrationBuilder.DropTable(
-                name: "Validateurs");
-
-            migrationBuilder.DropTable(
                 name: "Produits");
 
             migrationBuilder.DropTable(
-                name: "Fermes");
+                name: "Profiles");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Fermes");
 
             migrationBuilder.DropTable(
                 name: "Flux");
@@ -751,9 +732,6 @@ namespace PrevisionBackend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Regions");
-
-            migrationBuilder.DropTable(
-                name: "Profiles");
         }
     }
 }
