@@ -39,7 +39,9 @@ public class Ferme
     public ICollection<Assolement> Assolements { get; set; }
 
     public ICollection<Prevision> Previsions { get; set; }
-
+    
+    public int? FluxId;
+    [ForeignKey("FluxId")]
     public Flux Flux { get; set; } // Propriété de navigation pour l'objet Flux associé à la Ferme
     
     public int SystemVersionId { get; set; }

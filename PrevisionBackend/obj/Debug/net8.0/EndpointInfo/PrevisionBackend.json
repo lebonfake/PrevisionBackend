@@ -5,6 +5,86 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/fermes/without-flux/{fluxId}": {
+      "get": {
+        "tags": [
+          "Fermes"
+        ],
+        "parameters": [
+          {
+            "name": "fluxId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FermeReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FermeReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FermeReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fermes/affecter-fermes": {
+      "post": {
+        "tags": [
+          "Fermes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AffectFermeRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AffectFermeRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AffectFermeRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Flux": {
       "post": {
         "tags": [
@@ -482,6 +562,26 @@
   },
   "components": {
     "schemas": {
+      "AffectFermeRequestDto": {
+        "required": [
+          "fermeId",
+          "fluxId"
+        ],
+        "type": "object",
+        "properties": {
+          "fermeId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fluxId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "EtapeFluxCreateDto": {
         "type": "object",
         "properties": {
@@ -521,6 +621,20 @@
         },
         "additionalProperties": false
       },
+      "FermeReadDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FluxCreateDto": {
         "type": "object",
         "properties": {
@@ -552,6 +666,13 @@
           "nombreEtapes": {
             "type": "integer",
             "format": "int32"
+          },
+          "fermes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FermeReadDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

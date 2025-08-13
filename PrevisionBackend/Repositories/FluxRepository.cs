@@ -55,6 +55,7 @@ namespace PrevisionBackend.Repositories
                                  .Include(f => f.Etapes) // Changed Etapes to EtapesFlux
                                      .ThenInclude(ef => ef.EtapeFluxValidateurPermissions)
                                          .ThenInclude(efvp => efvp.PermissionPrev)
+                                .Include(f=>f.Fermes)
                                  .ToListAsync();
         }
     }

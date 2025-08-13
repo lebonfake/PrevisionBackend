@@ -39,6 +39,7 @@ namespace PrevisionBackend.DTO
         public int NombreEtapes { get; set; } // Compter les étapes pour la réponse
         // Vous pourriez inclure d'autres détails sur les étapes de flux ici si nécessaire
         // public List<EtapeFluxReadDto> EtapesFlux { get; set; }
+        public List<FermeReadDto> Fermes { get; set; }
     }
 
 }

@@ -98,7 +98,12 @@ namespace PrevisionBackend.Services
             {
                 Id = flux.Id,
                 Nom = flux.Nom, // Assurez-vous que le nom du flux est correctement mappé
-                NombreEtapes = flux.Etapes?.Count ?? 0
+                NombreEtapes = flux.Etapes?.Count ?? 0,
+                Fermes = flux.Fermes.Select(f => new FermeReadDto
+                {
+                    Id=f?.CodFerm,
+                    Nom =f?.NomFerm
+                })?.ToList(),
             };
         }
         // Vous pourriez ajouter d'autres mappers ici si nécessaire pour les DTOs de lecture imbriqués.

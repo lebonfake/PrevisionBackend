@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrevisionBackend.Data;
 
@@ -11,9 +12,11 @@ using PrevisionBackend.Data;
 namespace PrevisionBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250813135040_AddedFluxIdToFerme")]
+    partial class AddedFluxIdToFerme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,7 +232,7 @@ namespace PrevisionBackend.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("CodeDomaine");
 
-                    b.Property<int?>("FluxId")
+                    b.Property<int>("FluxId1")
                         .HasColumnType("int");
 
                     b.Property<string>("NomFerm")
@@ -253,7 +256,7 @@ namespace PrevisionBackend.Migrations
 
                     b.HasIndex("CodRegion");
 
-                    b.HasIndex("FluxId");
+                    b.HasIndex("FluxId1");
 
                     b.HasIndex("RefProd");
 
@@ -866,7 +869,9 @@ namespace PrevisionBackend.Migrations
 
                     b.HasOne("PrevisionBackend.Models.Flux", "Flux")
                         .WithMany("Fermes")
-                        .HasForeignKey("FluxId");
+                        .HasForeignKey("FluxId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PrevisionBackend.Models.Producteur", "Producteur")
                         .WithMany("Fermes")

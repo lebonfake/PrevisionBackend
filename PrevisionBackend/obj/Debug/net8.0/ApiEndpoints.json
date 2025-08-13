@@ -1,5 +1,47 @@
 [
   {
+    "ContainingType": "PrevisionBackend.Controllers.FermesController",
+    "Method": "AffectFermesWithFlux",
+    "RelativePath": "api/fermes/affecter-fermes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PrevisionBackend.DTO.AffectFermeRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.FermesController",
+    "Method": "GetFermesWithoutFluxId",
+    "RelativePath": "api/fermes/without-flux/{fluxId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fluxId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.FermeReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "PrevisionBackend.Controllers.FluxController",
     "Method": "CreateFlux",
     "RelativePath": "api/Flux",
