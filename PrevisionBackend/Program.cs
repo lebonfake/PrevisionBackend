@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using PrevisionBackend.Data;
+using PrevisionBackend.Repositories;
+using PrevisionBackend.Service;
+using PrevisionBackend.Repositories;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +11,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:3000") 
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials()); // (cookies, HTTP authentication)
+
+    
+});
+
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserRepository>();
+
+
+builder.Services.AddScoped<ValidateurService>();
+builder.Services.AddScoped<ValidateurRepository>();
 
 
 builder.Services.AddControllers();
@@ -23,7 +45,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("AllowSpecificOrigin");
 }
+
 
 app.UseHttpsRedirection();
 

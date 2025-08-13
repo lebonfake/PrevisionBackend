@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PrevisionBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7e21b36020ebed1d0881b7275a72e9d9f2eee5f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01e6a1d145130a62102fd908d4fbf3070f778cfa")]
 [assembly: System.Reflection.AssemblyProductAttribute("PrevisionBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PrevisionBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
