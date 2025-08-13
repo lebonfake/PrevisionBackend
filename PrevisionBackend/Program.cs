@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using PrevisionBackend.Data;
 using PrevisionBackend.Repositories;
-using PrevisionBackend.Service;
 using PrevisionBackend.Repositories;
+using PrevisionBackend.Service;
+using PrevisionBackend.Services;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,12 +25,18 @@ builder.Services.AddCors(options =>
     
 });
 
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<UserRepository>();
+// Register all Repositories (concrete classes)
+builder.Services.AddScoped<UserRepository>(); // Existing
+builder.Services.AddScoped<ValidateurRepository>(); // Existing
+builder.Services.AddScoped<FluxRepository>(); // For Flux creation
+builder.Services.AddScoped<PermissionPrevRepository>(); // For Flux creation
 
+// Register all Services (concrete classes)
+builder.Services.AddScoped<UserService>(); // Existing
+builder.Services.AddScoped<ValidateurService>(); // Existing
+builder.Services.AddScoped<FluxService>(); // For Flux creation
+builder.Services.AddScoped<PermissionPrevService>();
 
-builder.Services.AddScoped<ValidateurService>();
-builder.Services.AddScoped<ValidateurRepository>();
 
 
 builder.Services.AddControllers();

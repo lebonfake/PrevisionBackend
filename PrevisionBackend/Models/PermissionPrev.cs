@@ -3,9 +3,9 @@
 {
     public enum PermissionType
     {
-        Lecture,
-        Ecriture,
-        Validation
+        Modifier,
+        Valider,
+        Annuler
     }
 
     public class PermissionPrev

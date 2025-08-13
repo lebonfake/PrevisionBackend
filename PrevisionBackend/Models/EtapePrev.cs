@@ -14,8 +14,8 @@ namespace PrevisionBackend.Models
         public StatutEtapePrev Statut { get; set; }
 
         public int PrevisionId { get; set; }
-        public int EtapeFluxId { get; set; }
         public Prevision Prevision { get; set; }
+        public int EtapeFluxId { get; set; }
         public EtapeFlux EtapeFlux { get; set; }
     }
 }

@@ -35,6 +35,8 @@ namespace PrevisionBackend.Data
         public DbSet<Validateur> Validateurs { get; set; }
         public DbSet<EtapeFluxValidateurPermission> EtapeFluxValidateurPermissions { get; set; }
         public DbSet<PermissionPrev> PermissionPrevisions { get; set; }
+        public DbSet<SystemVersion> SystemVersions { get; set; }
+        public DbSet<PrevisionBackend.Models.Version> Versions { get; set; }
 
         // Authentication and authorization models
         public DbSet<Profile> Profiles { get; set; }
@@ -126,6 +128,19 @@ namespace PrevisionBackend.Data
            .Property(lp => lp.Valeur)
            .HasPrecision(18, 2); // Par exemple: 18 chiffres au total, 2 après la virgule.
                                  // Ajustez ces valeurs (18, 2) selon vos besoins métier réels.
+
+
+             modelBuilder.Entity<Prevision>()
+            .HasOne(pf => pf.Flux)
+            .WithMany()
+            .HasForeignKey(pf => pf.FluxId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Prevision>()
+           .HasOne(pf => pf.Version)
+           .WithMany()
+           .HasForeignKey(pf => pf.VersionId)
+           .OnDelete(DeleteBehavior.Restrict);
 
             // Si 'Module_Permissions' dans 'Permission' ne se mappe pas correctement par convention
             // et que vous avez des problèmes, vous pourriez avoir besoin de le spécifier explicitement.

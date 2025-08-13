@@ -41,5 +41,8 @@ public class Ferme
     public ICollection<Prevision> Previsions { get; set; }
 
     public Flux Flux { get; set; } // Propriété de navigation pour l'objet Flux associé à la Ferme
-}
+    
+    public int SystemVersionId { get; set; }
+    public SystemVersion SystemVersion { get; set; }
+    }
 }

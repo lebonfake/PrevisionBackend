@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrevisionBackend.Data;
 
@@ -11,9 +12,11 @@ using PrevisionBackend.Data;
 namespace PrevisionBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250813083908_FixedFluxAffectationHistory")]
+    partial class FixedFluxAffectationHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,9 +249,6 @@ namespace PrevisionBackend.Migrations
                         .HasColumnType("real")
                         .HasColumnName("superficie");
 
-                    b.Property<int>("SystemVersionId")
-                        .HasColumnType("int");
-
                     b.HasKey("CodFerm");
 
                     b.HasIndex("CodRegion");
@@ -256,8 +256,6 @@ namespace PrevisionBackend.Migrations
                     b.HasIndex("FluxId");
 
                     b.HasIndex("RefProd");
-
-                    b.HasIndex("SystemVersionId");
 
                     b.ToTable("Fermes");
                 });
@@ -273,6 +271,9 @@ namespace PrevisionBackend.Migrations
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NombreEtapes")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -395,7 +396,7 @@ namespace PrevisionBackend.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("VersionId")
+                    b.Property<int?>("Version")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -403,8 +404,6 @@ namespace PrevisionBackend.Migrations
                     b.HasIndex("FermeId");
 
                     b.HasIndex("FluxId");
-
-                    b.HasIndex("VersionId");
 
                     b.ToTable("PrevisionFermes");
                 });
@@ -587,26 +586,6 @@ namespace PrevisionBackend.Migrations
                     b.ToTable("Secteurs");
                 });
 
-            modelBuilder.Entity("PrevisionBackend.Models.SystemVersion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NombreVersion")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SystemVersions");
-                });
-
             modelBuilder.Entity("PrevisionBackend.Models.User", b =>
                 {
                     b.Property<int>("UserID")
@@ -726,34 +705,6 @@ namespace PrevisionBackend.Migrations
                     b.HasIndex("CodeVar");
 
                     b.ToTable("VarieteChamps");
-                });
-
-            modelBuilder.Entity("PrevisionBackend.Models.Version", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("EndDay")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("StartDay")
-                        .HasColumnType("date");
-
-                    b.Property<int>("SystemVersionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SystemVersionId");
-
-                    b.ToTable("Versions");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.Assolement", b =>
@@ -876,19 +827,11 @@ namespace PrevisionBackend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PrevisionBackend.Models.SystemVersion", "SystemVersion")
-                        .WithMany()
-                        .HasForeignKey("SystemVersionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Flux");
 
                     b.Navigation("Producteur");
 
                     b.Navigation("Region");
-
-                    b.Navigation("SystemVersion");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.LignePrevision", b =>
@@ -927,17 +870,9 @@ namespace PrevisionBackend.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PrevisionBackend.Models.Version", "Version")
-                        .WithMany()
-                        .HasForeignKey("VersionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Ferme");
 
                     b.Navigation("Flux");
-
-                    b.Navigation("Version");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.PrevisionDetails", b =>
@@ -1037,17 +972,6 @@ namespace PrevisionBackend.Migrations
                     b.Navigation("Variete");
                 });
 
-            modelBuilder.Entity("PrevisionBackend.Models.Version", b =>
-                {
-                    b.HasOne("PrevisionBackend.Models.SystemVersion", "SystemVersion")
-                        .WithMany("Versions")
-                        .HasForeignKey("SystemVersionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SystemVersion");
-                });
-
             modelBuilder.Entity("PrevisionBackend.Models.Cycle", b =>
                 {
                     b.Navigation("Assolements");
@@ -1128,11 +1052,6 @@ namespace PrevisionBackend.Migrations
             modelBuilder.Entity("PrevisionBackend.Models.Secteur", b =>
                 {
                     b.Navigation("Assolements");
-                });
-
-            modelBuilder.Entity("PrevisionBackend.Models.SystemVersion", b =>
-                {
-                    b.Navigation("Versions");
                 });
 
             modelBuilder.Entity("PrevisionBackend.Models.Validateur", b =>

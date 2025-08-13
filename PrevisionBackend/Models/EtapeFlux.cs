@@ -10,7 +10,7 @@ namespace PrevisionBackend.Models
 
     public Flux Flux { get; set; }
     public ICollection<EtapePrev> EtapesPrev { get; set; }
-        public ICollection<EtapeFluxValidateurPermission> EtapeFluxValidateurPermissions { get; set; }
+    public ICollection<EtapeFluxValidateurPermission> EtapeFluxValidateurPermissions { get; set; }
 
     }
 

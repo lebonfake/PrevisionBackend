@@ -1,5 +1,71 @@
 [
   {
+    "ContainingType": "PrevisionBackend.Controllers.FluxController",
+    "Method": "CreateFlux",
+    "RelativePath": "api/Flux",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fluxDto",
+        "Type": "PrevisionBackend.DTO.FluxCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PrevisionBackend.DTO.FluxReadDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.FluxController",
+    "Method": "GetAllFlux",
+    "RelativePath": "api/Flux",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.FluxReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.PermissionPrevController",
+    "Method": "GetAllPermissions",
+    "RelativePath": "api/permissionprev",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.PermissionPrevReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "PrevisionBackend.Controllers.UserController",
     "Method": "Get",
     "RelativePath": "api/users",

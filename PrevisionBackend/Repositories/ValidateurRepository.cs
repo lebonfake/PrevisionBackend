@@ -28,7 +28,6 @@ namespace PrevisionBackend.Repositories
         {
             return await _context.Validateurs
                 .Include(v => v.User) // Inclure l'utilisateur associé
-                .Include(v => v.EtapeFluxValidateurPermissions) // Inclure les permissions associées
                 .FirstOrDefaultAsync(v => v.Id == id);
         }
 
