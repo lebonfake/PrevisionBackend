@@ -32,6 +32,14 @@ namespace PrevisionBackend.Repositories
                                  .ToListAsync();
         }
 
+        public async Task<IEnumerable<Ferme>> GetFermesWithoutSystemIdAsync(int systemId)
+        {
+            return await _context.Fermes
+                                .Where(f => !f.SystemVersionId.HasValue || f.SystemVersionId.Value != systemId)
+                                .ToListAsync();
+        
+        }
+
         public async Task AffectFermeWithFlux(string fermeId, Flux flux)
         {
             var ferme = await _context.Fermes.Where(f => f.CodFerm == fermeId).FirstOrDefaultAsync();
@@ -48,6 +56,21 @@ namespace PrevisionBackend.Repositories
             // IMPORTANT : SaveChangesAsync() N'EST PAS appelé ici.
             // Il sera appelé une seule fois au niveau du service après toutes les affectations.
         }
+
+
+        public async  Task AffectVersionToFarmAsync(string codeFerme , SystemVersion version)
+        {
+            var ferme = _context.Fermes.Where(f=>f.CodFerm == codeFerme).FirstOrDefault();
+            if(ferme == null)
+            {
+                throw new InvalidOperationException($"Ferme with ID {codeFerme} not found.");
+            }
+            ferme.SystemVersion = version;
+            ferme.SystemVersionId = version.Id;
+
+            
+        }
+      
 
         /// <summary>
         /// Sauvegarde tous les changements en attente dans la base de données.

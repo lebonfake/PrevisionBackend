@@ -17,6 +17,22 @@
   },
   {
     "ContainingType": "PrevisionBackend.Controllers.FermesController",
+    "Method": "AffectFermesWithFlux",
+    "RelativePath": "api/fermes/affecter-fermes-systemver",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PrevisionBackend.DTO.AffectFermeVesrionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.FermesController",
     "Method": "GetFermesWithoutFluxId",
     "RelativePath": "api/fermes/without-flux/{fluxId}",
     "HttpMethod": "GET",
@@ -25,6 +41,32 @@
     "Parameters": [
       {
         "Name": "fluxId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.FermeReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.FermesController",
+    "Method": "GetFermesWithoutSystemId",
+    "RelativePath": "api/fermes/without-system/{systemId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "systemId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -103,6 +145,127 @@
           "application/json",
           "text/json"
         ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SystemVersionController",
+    "Method": "Get",
+    "RelativePath": "api/systemVersion",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.SystemVersionReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SystemVersionController",
+    "Method": "Post",
+    "RelativePath": "api/systemVersion",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "PrevisionBackend.DTO.SystemVersionCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PrevisionBackend.DTO.SystemVersionReadDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SystemVersionController",
+    "Method": "Get",
+    "RelativePath": "api/systemVersion/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SystemVersionController",
+    "Method": "Put",
+    "RelativePath": "api/systemVersion/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "value",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SystemVersionController",
+    "Method": "Delete",
+    "RelativePath": "api/systemVersion/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
         "StatusCode": 200
       }
     ]

@@ -13,10 +13,13 @@ namespace PrevisionBackend.Services
 
         private readonly FluxRepository _fluxRepository;
 
-        public FermeService(FermeRepository fermeRepository,FluxRepository fluxRepository)
+        private readonly SystemVersionRepository _systemVersionRepository;
+
+        public FermeService(FermeRepository fermeRepository,FluxRepository fluxRepository,SystemVersionRepository systemVersionRepository)
         {
             _fermeRepository = fermeRepository;
             _fluxRepository =  fluxRepository;
+            _systemVersionRepository = systemVersionRepository;
         }
 
         /// <summary>
@@ -27,6 +30,11 @@ namespace PrevisionBackend.Services
         public async Task<IEnumerable<FermeReadDto>> GetFermesWithoutFluxIdAsync(int fluxId)
         {
             var fermes = await _fermeRepository.GetFermesWithoutFluxIdAsync(fluxId);
+            return fermes.Select(f => MapToFermeReadDto(f)).ToList();
+        }
+        public async Task<IEnumerable<FermeReadDto>> GetFermesWithoutSystemIdAsync(int systemId)
+        {
+            var fermes = await _fermeRepository.GetFermesWithoutSystemIdAsync(systemId);
             return fermes.Select(f => MapToFermeReadDto(f)).ToList();
         }
 
@@ -43,6 +51,25 @@ namespace PrevisionBackend.Services
             {
                 // Le repository va trouver et affecter le flux à la ferme
                 await _fermeRepository.AffectFermeWithFlux(codeFerme, flux);
+            }
+
+            // IMPORTANT : SaveChangesAsync est appelé une seule fois ici au niveau du service
+            // après toutes les opérations d'affectation pour assurer l'atomicité de la transaction.
+            await _fermeRepository.SaveChangesAsync(); // Cette méthode doit être ajoutée au FermeRepository
+        }
+
+        public async Task AffectFermeWithVersion(List<string> codeFermes, int systemId)
+        {
+            var system = await _systemVersionRepository.GetByIdAsync(systemId);
+            if (system == null)
+            {
+                throw new InvalidOperationException($"system with ID {systemId} not found.");
+            }
+
+            foreach (var codeFerme in codeFermes)
+            {
+                // Le repository va trouver et affecter le flux à la ferme
+                await _fermeRepository.AffectVersionToFarmAsync(codeFerme, system);
             }
 
             // IMPORTANT : SaveChangesAsync est appelé une seule fois ici au niveau du service

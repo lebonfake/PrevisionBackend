@@ -16,5 +16,14 @@ namespace PrevisionBackend.DTO
         [Required]
         public int FluxId { get; set; } // The ID of the flux to associate
     }
+    public class AffectFermeVesrionDto 
+    {
+      [Required]
+    public List<string> FermeId { get; set; } // The ID of the farm to affect
+
+    [Required]
+    public int SystemId { get; set; } // The ID of the flux to associate
+
+}
 
 }

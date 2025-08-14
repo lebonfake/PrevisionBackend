@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using PrevisionBackend.Data;
 using PrevisionBackend.Repositories;
 using PrevisionBackend.Repositories;
@@ -31,6 +32,7 @@ builder.Services.AddScoped<ValidateurRepository>(); // Existing
 builder.Services.AddScoped<FluxRepository>(); // For Flux creation
 builder.Services.AddScoped<PermissionPrevRepository>(); // For Flux creation
 builder.Services.AddScoped<FermeRepository>(); // For Ferme creation
+builder.Services.AddScoped<SystemVersionRepository>();
 
 
 // Register all Services (concrete classes)
@@ -39,6 +41,8 @@ builder.Services.AddScoped<ValidateurService>(); // Existing
 builder.Services.AddScoped<FluxService>(); // For Flux creation
 builder.Services.AddScoped<PermissionPrevService>();
 builder.Services.AddScoped<FermeService>(); // For Flux creation
+builder.Services.AddScoped<SystemVersionService>();
+
 
 
 

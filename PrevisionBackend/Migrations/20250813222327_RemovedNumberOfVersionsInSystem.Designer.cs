@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrevisionBackend.Data;
 
@@ -11,9 +12,11 @@ using PrevisionBackend.Data;
 namespace PrevisionBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250813222327_RemovedNumberOfVersionsInSystem")]
+    partial class RemovedNumberOfVersionsInSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,7 +249,7 @@ namespace PrevisionBackend.Migrations
                         .HasColumnType("real")
                         .HasColumnName("superficie");
 
-                    b.Property<int?>("SystemVersionId")
+                    b.Property<int>("SystemVersionId")
                         .HasColumnType("int");
 
                     b.HasKey("CodFerm");
@@ -733,15 +736,15 @@ namespace PrevisionBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EndDay")
-                        .HasColumnType("int");
+                    b.Property<DateOnly>("EndDay")
+                        .HasColumnType("date");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StartDay")
-                        .HasColumnType("int");
+                    b.Property<DateOnly>("StartDay")
+                        .HasColumnType("date");
 
                     b.Property<int>("SystemVersionId")
                         .HasColumnType("int");
@@ -873,7 +876,9 @@ namespace PrevisionBackend.Migrations
 
                     b.HasOne("PrevisionBackend.Models.SystemVersion", "SystemVersion")
                         .WithMany()
-                        .HasForeignKey("SystemVersionId");
+                        .HasForeignKey("SystemVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Flux");
 
