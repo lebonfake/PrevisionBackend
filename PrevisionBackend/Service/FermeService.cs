@@ -77,6 +77,15 @@ namespace PrevisionBackend.Services
             await _fermeRepository.SaveChangesAsync(); // Cette méthode doit être ajoutée au FermeRepository
         }
 
+        public async Task<List<FermeReadDto>> GetFermesByUserId(int userId)
+        {
+            //to do check if user is null
+
+            List<Ferme> fermes= await _fermeRepository.getFermeByUserId(userId);
+            List<FermeReadDto> dto = fermes.Select(f=>MapToFermeReadDto(f)).ToList();
+            return dto;
+        }
+
         /// <summary>
         /// Mappe un objet Ferme (modèle de base de données) à un FermeReadDto.
         /// </summary>

@@ -24,6 +24,22 @@ namespace PrevisionBackend.Controllers
          
             return await SystemVersionService.GetAllAsync();
         }
+        [HttpGet("get-by-farmId/{fermeId}")]
+        public async Task<ActionResult<SystemVersionReadDto>> GetByFarmId(string fermeId)
+        {
+            // Correction: Appeler la méthode du service via l'instance _systemVersionService
+            var systemVersionDto = await SystemVersionService.GetSystemVersionByFarmIdAsync(fermeId);
+
+            if (systemVersionDto == null)
+            {
+                return NotFound($"No SystemVersion found for Ferme with ID: {fermeId}"); // Retourne 404 si non trouvé
+            }
+
+            return Ok(systemVersionDto); // Retourne 200 OK avec le DTO
+        }
+
+
+
 
         // GET api/<SystemVersionController>/5
         [HttpGet("{id}")]

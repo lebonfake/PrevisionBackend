@@ -29,6 +29,15 @@ namespace PrevisionBackend.Repositories
             return await _context.SystemVersions.Include(s => s.Versions).ToListAsync();
         }
 
+        public async Task<SystemVersion> GetSystemVersionByFarmIdAsync(string fermeId)
+        {
+            var system= await _context.SystemVersions           // Start from the SystemVersions DbSet
+                                  .Include(sv => sv.Versions) // Eagerly load Versions *on SystemVersion*
+                                  .Where(sv => sv.Fermes.Any(f => f.CodFerm == fermeId)) // Filter SystemVersions based on their associated Fermes
+                                  .FirstOrDefaultAsync();
+            return system;
+        }
+
 
     }
 }

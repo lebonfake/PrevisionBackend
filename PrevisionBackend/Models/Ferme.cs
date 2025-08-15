@@ -48,5 +48,7 @@ public class Ferme
     public int? SystemVersionId { get; set; } // <<-- Rendu nullable
     [ForeignKey("SystemVersionId")]
     public SystemVersion SystemVersion { get; set; }
+
+    public ICollection<UserFerme> UserFermes { get; set; }
     }
 }

@@ -47,6 +47,16 @@ namespace PrevisionBackend.Controllers
 
             return Ok(fermes); // Retourne 200 OK avec la liste des fermes
         }
+
+        [HttpGet("getByUser/{userId}")]
+        public async Task<ActionResult<IEnumerable<FermeReadDto>>> GetFermesByUserId(int userId)
+        {
+            return await _fermeService.GetFermesByUserId(userId);
+        }
+
+
+
+        //post
         [HttpPost("affecter-fermes")]
         public async Task<IActionResult> AffectFermesWithFlux([FromBody] AffectFermeRequestDto request)
         {

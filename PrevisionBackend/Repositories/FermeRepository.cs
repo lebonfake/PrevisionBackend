@@ -70,7 +70,22 @@ namespace PrevisionBackend.Repositories
 
             
         }
-      
+        public async Task<List<Ferme>> getFermeByUserId(int userId)
+        {
+            var fermeIds = await _context.UserFermes
+                                        .Where(uf => uf.UserId == userId)
+                                        .Select(uf => uf.FermeId)
+                                        .ToListAsync(); // Ceci est la première partie de la requête
+
+           
+            var fermes = await _context.Fermes
+                                       .Where(f => fermeIds.Contains(f.CodFerm))
+                                       .ToListAsync();
+
+            return fermes;
+
+        }
+
 
         /// <summary>
         /// Sauvegarde tous les changements en attente dans la base de données.

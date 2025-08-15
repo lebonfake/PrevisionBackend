@@ -33,6 +33,9 @@ builder.Services.AddScoped<FluxRepository>(); // For Flux creation
 builder.Services.AddScoped<PermissionPrevRepository>(); // For Flux creation
 builder.Services.AddScoped<FermeRepository>(); // For Ferme creation
 builder.Services.AddScoped<SystemVersionRepository>();
+builder.Services.AddScoped<SecteurRepository>();
+builder.Services.AddScoped<CycleRepository>();
+
 
 
 // Register all Services (concrete classes)
@@ -42,6 +45,8 @@ builder.Services.AddScoped<FluxService>(); // For Flux creation
 builder.Services.AddScoped<PermissionPrevService>();
 builder.Services.AddScoped<FermeService>(); // For Flux creation
 builder.Services.AddScoped<SystemVersionService>();
+builder.Services.AddScoped<SecteurService>();
+builder.Services.AddScoped<CycleService>();
 
 
 

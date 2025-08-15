@@ -26,6 +26,14 @@ namespace PrevisionBackend.Service
             return list.Select(f => FromSystemToRead(f)).ToList();
         }
 
+        public async Task<SystemVersionReadDto> GetSystemVersionByFarmIdAsync(string fermeId)
+        {
+            var system = await systemVersionRepository.GetSystemVersionByFarmIdAsync(fermeId);
+
+            return FromSystemToRead(system);
+
+        }
+
 
         public SystemVersion FromCreateToSystem(SystemVersionCreateDto systemVersionCreateDto) {
 

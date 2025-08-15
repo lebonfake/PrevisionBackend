@@ -37,5 +37,8 @@ namespace PrevisionBackend.Models
     public Profile Profile { get; set; } // Propriété de navigation vers l'objet Profile
 
     public DateTime CreatedAt { get; set; }
+
+    public ICollection<UserFerme> UserFermes { get; set; }
+                
 }
 }

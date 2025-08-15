@@ -37,6 +37,7 @@ namespace PrevisionBackend.Data
         public DbSet<PermissionPrev> PermissionPrevisions { get; set; }
         public DbSet<SystemVersion> SystemVersions { get; set; }
         public DbSet<PrevisionBackend.Models.Version> Versions { get; set; }
+        public DbSet<UserFerme> UserFermes { get; set; }
 
         // Authentication and authorization models
         public DbSet<Profile> Profiles { get; set; }
@@ -141,6 +142,21 @@ namespace PrevisionBackend.Data
            .WithMany()
            .HasForeignKey(pf => pf.VersionId)
            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserFerme>()
+                .HasKey(uf => new { uf.UserId, uf.FermeId }); // Clé primaire composite
+
+            modelBuilder.Entity<UserFerme>()
+                .HasOne(uf => uf.User)
+                .WithMany(u => u.UserFermes)
+                .HasForeignKey(uf => uf.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Comportement de suppression
+
+            modelBuilder.Entity<UserFerme>()
+                .HasOne(uf => uf.Ferme)
+                .WithMany(f => f.UserFermes)
+                .HasForeignKey(uf => uf.FermeId)
+                .OnDelete(DeleteBehavior.Cascade); // Comportement de suppression
 
             // Si 'Module_Permissions' dans 'Permission' ne se mappe pas correctement par convention
             // et que vous avez des problèmes, vous pourriez avoir besoin de le spécifier explicitement.

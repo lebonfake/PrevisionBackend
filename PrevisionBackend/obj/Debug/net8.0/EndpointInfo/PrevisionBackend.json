@@ -5,6 +5,92 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/cycles": {
+      "get": {
+        "tags": [
+          "Cycles"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CycleReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CycleReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CycleReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cycles/get-by-farmId/{fermeId}": {
+      "get": {
+        "tags": [
+          "Cycles"
+        ],
+        "parameters": [
+          {
+            "name": "fermeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CycleReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CycleReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CycleReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/fermes/without-flux/{fluxId}": {
       "get": {
         "tags": [
@@ -62,6 +148,55 @@
         "parameters": [
           {
             "name": "systemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FermeReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FermeReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FermeReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fermes/getByUser/{userId}": {
+      "get": {
+        "tags": [
+          "Fermes"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -287,6 +422,92 @@
         }
       }
     },
+    "/api/secteurs": {
+      "get": {
+        "tags": [
+          "Secteurs"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecteurReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecteurReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecteurReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/secteurs/get-by-farmId/{fermeId}": {
+      "get": {
+        "tags": [
+          "Secteurs"
+        ],
+        "parameters": [
+          {
+            "name": "fermeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecteurReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecteurReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecteurReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/systemVersion": {
       "get": {
         "tags": [
@@ -347,6 +568,45 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemVersionReadDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemVersionReadDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemVersionReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/systemVersion/get-by-farmId/{fermeId}": {
+      "get": {
+        "tags": [
+          "SystemVersion"
+        ],
+        "parameters": [
+          {
+            "name": "fermeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -867,6 +1127,20 @@
         },
         "additionalProperties": false
       },
+      "CycleReadDto": {
+        "type": "object",
+        "properties": {
+          "codeCycle": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "EtapeFluxCreateDto": {
         "type": "object",
         "properties": {
@@ -970,6 +1244,28 @@
             "format": "int32"
           },
           "permissions": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SecteurReadDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "superficie": {
+            "type": "number",
+            "format": "float"
+          },
+          "codFerm": {
             "type": "string",
             "nullable": true
           }

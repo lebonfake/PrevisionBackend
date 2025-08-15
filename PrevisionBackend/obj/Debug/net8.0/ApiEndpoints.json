@@ -1,5 +1,51 @@
 [
   {
+    "ContainingType": "PrevisionBackend.Controllers.CyclesController",
+    "Method": "GetAllCycles",
+    "RelativePath": "api/cycles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.CycleReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.CyclesController",
+    "Method": "GetActiveCycleByFermeId",
+    "RelativePath": "api/cycles/get-by-farmId/{fermeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fermeId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.CycleReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "PrevisionBackend.Controllers.FermesController",
     "Method": "AffectFermesWithFlux",
     "RelativePath": "api/fermes/affecter-fermes",
@@ -30,6 +76,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.FermesController",
+    "Method": "GetFermesByUserId",
+    "RelativePath": "api/fermes/getByUser/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.FermeReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "PrevisionBackend.Controllers.FermesController",
@@ -140,6 +212,52 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.PermissionPrevReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SecteursController",
+    "Method": "GetAllSecteurs",
+    "RelativePath": "api/secteurs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.SecteurReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SecteursController",
+    "Method": "GetActiveSecteurByFermId",
+    "RelativePath": "api/secteurs/get-by-farmId/{fermeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fermeId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PrevisionBackend.DTO.SecteurReadDto, PrevisionBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -266,6 +384,32 @@
       {
         "Type": "System.Void",
         "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PrevisionBackend.Controllers.SystemVersionController",
+    "Method": "GetByFarmId",
+    "RelativePath": "api/systemVersion/get-by-farmId/{fermeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fermeId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PrevisionBackend.DTO.SystemVersionReadDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       }
     ]
